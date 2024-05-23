@@ -7,23 +7,25 @@ import com.example.Practise.service.StudentServiceInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/greetings") //@RequestMapping maps to a Get method by default
 @RequiredArgsConstructor
 @Slf4j
 public class StudentController {
-
     @Autowired
-    private final StudentServiceInterface studentServiceInterface;
+    private StudentServiceInterface studentServiceInterface;
 
-    @Autowired
-    private StudentRepository studentRepository;
+
+
+//    private  final StudentRepository studentRepository;
 
     @GetMapping("/hello")
     public String greetings(){
@@ -34,24 +36,41 @@ public class StudentController {
     public String welcome(){
         return "This is the Turnkey Africa Limited homepage";
     }
-    @PostMapping("add")
-    public StudentDto addNewStudent(@RequestBody StudentDto studentDto){
-        Student student = new Student();
-        student.getFirstName();
-        return studentServiceInterface.addNewStudent(studentDto);
-    }
+
 
     //handler method to handle list of students and return mode and view
     @GetMapping("/students")
     public List<Student> getAllStudents(){
-        List<Student> students = studentRepository.findAll();
-
-        return students;
+        return studentServiceInterface.getAllStudents();
     }
-
     @GetMapping("/students/{id}")
-    public Student getStudentById(@PathVariable BigDecimal id){
-        return studentRepository.findById(id).get();
+    public ResponseEntity<Optional<StudentDto>> getStudentById(@PathVariable BigDecimal id){
+
+    try {
+        Optional<StudentDto> student=studentServiceInterface.getStudentById(id);
+        return new ResponseEntity<>(student, HttpStatus.OK);
+
+    }catch (Exception e){
+       return  new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Student> addStudent(@RequestBody Student student){
+        try {
+            Student addedStudent=studentServiceInterface.addStudent(student);
+            return new ResponseEntity<>(addedStudent,HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/students/{id}")
+    public void updateStudent(@RequestBody Student student, @PathVariable BigDecimal id){
+        studentServiceInterface.updateStudent(id, student);
+    }
+
+
+
 
 }
