@@ -16,11 +16,7 @@ import java.math.BigDecimal;
 @Table(name="student1")
 public class Student {
 
-    @SequenceGenerator(
-            name = "student1-sequence",
-            sequenceName = "student1-sequence",
-            allocationSize = 1  // increments the id inorder from 1
-    )
+
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id //shows that the id is a primary key
     private BigDecimal id;
@@ -30,6 +26,7 @@ public class Student {
     private String lastName;
 
     private String location;
+
 
     private String email;
 

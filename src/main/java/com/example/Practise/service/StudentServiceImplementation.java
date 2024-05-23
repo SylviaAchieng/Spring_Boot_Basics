@@ -1,5 +1,6 @@
 package com.example.Practise.service;
 
+
 import com.example.Practise.dto.StudentDto;
 import com.example.Practise.mapper.StudentMapper;
 import com.example.Practise.model.Student;
@@ -15,27 +16,40 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-@RequiredArgsConstructor
-@Service
 
+@Service
 public class StudentServiceImplementation implements StudentServiceInterface{
 
 
     private static final Logger log = LoggerFactory.getLogger(StudentServiceImplementation.class);
 
-    private StudentRepository studentRepository;
 
-    private StudentMapper studentMapper;
-
+    private final StudentRepository studentRepository;
 
 
-    public List<Student> getAllStudents() {
-        List<Student> students = new ArrayList<>();
-         studentRepository.findAll().forEach(students::add);
-         return students;
+    private final StudentMapper studentMapper;
+
+    //constructor injection since lombok injection may lead to creating may beans
+    public StudentServiceImplementation(StudentRepository studentRepository, StudentMapper studentMapper) {
+        this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
     }
 
 
+    //creating a new student
+    public Student addStudent( Student student){
+        Student createdStudent = studentRepository.save(student);
+        log.info("Student created successfully");
+        return createdStudent;
+    }
+
+    //getting a list of students
+    public List<Student> getAllStudents() {
+         return studentRepository.findAll();
+
+    }
+
+    //get student by id
     public Optional<StudentDto> getStudentById(BigDecimal id){
         Optional<StudentDto> studentDto = studentRepository.findById(id).map(studentMapper::StudentToStudentDto);
   if (studentDto.isPresent()){
@@ -46,12 +60,6 @@ public class StudentServiceImplementation implements StudentServiceInterface{
   }
     }
 
-
-    public Student addStudent( Student student){
-         Student createdStudent=studentRepository.save(student);
-        log.info("Student created successfully");
-        return createdStudent;
-    }
 
 
     public void updateStudent(BigDecimal id, Student student) {
