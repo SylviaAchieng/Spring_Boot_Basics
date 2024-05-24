@@ -5,9 +5,6 @@ import com.example.Practise.model.Student;
 import lombok.experimental.Delegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-
-
 
 public class StudentMapperDecorator implements StudentMapper{
     @Autowired

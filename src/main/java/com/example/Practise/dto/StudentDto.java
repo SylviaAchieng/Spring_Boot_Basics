@@ -11,12 +11,14 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Data
 @Builder
+
+//what you want to display to the users
 public class StudentDto {
     private BigDecimal id;
 
-    private String firstname;
+    private String firstName;
 
-    private String lastname;
+    private String lastName;
 
     private String email;
 

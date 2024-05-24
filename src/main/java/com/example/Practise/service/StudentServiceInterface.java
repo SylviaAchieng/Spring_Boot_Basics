@@ -2,7 +2,6 @@ package com.example.Practise.service;
 
 import com.example.Practise.dto.StudentDto;
 import com.example.Practise.model.Student;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,4 +19,6 @@ public interface StudentServiceInterface {
     Student addStudent(Student student);
 
     void updateStudent(BigDecimal id, Student student);
+
+    void deleteStudentById(BigDecimal id);
 }

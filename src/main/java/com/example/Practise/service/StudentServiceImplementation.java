@@ -5,15 +5,12 @@ import com.example.Practise.dto.StudentDto;
 import com.example.Practise.mapper.StudentMapper;
 import com.example.Practise.model.Student;
 import com.example.Practise.repository.StudentRepository;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,5 +63,10 @@ public class StudentServiceImplementation implements StudentServiceInterface{
         studentRepository.save(student);
     }
 
+    @Override
+    public void deleteStudentById(BigDecimal id) {
+        studentRepository.deleteById(id);
+
+    }
 
 }

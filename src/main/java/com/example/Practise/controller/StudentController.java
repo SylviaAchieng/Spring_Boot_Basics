@@ -37,12 +37,22 @@ public class StudentController {
         return "This is the Turnkey Africa Limited homepage";
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<Student> addStudent(@RequestBody Student student){
+        try {
+            Student addedStudent=studentServiceInterface.addStudent(student);
+            return new ResponseEntity<>(addedStudent,HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     //handler method to handle list of students and return mode and view
     @GetMapping("/students")
     public List<Student> getAllStudents(){
         return studentServiceInterface.getAllStudents();
     }
+
     @GetMapping("/students/{id}")
     public ResponseEntity<Optional<StudentDto>> getStudentById(@PathVariable BigDecimal id){
 
@@ -55,21 +65,15 @@ public class StudentController {
     }
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Student> addStudent(@RequestBody Student student){
-        try {
-            Student addedStudent=studentServiceInterface.addStudent(student);
-            return new ResponseEntity<>(addedStudent,HttpStatus.CREATED);
-        }catch (Exception e){
-            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @PutMapping("/students/{id}")
     public void updateStudent(@RequestBody Student student, @PathVariable BigDecimal id){
         studentServiceInterface.updateStudent(id, student);
     }
 
+    @DeleteMapping("/students/{id}")
+    public void deleteStudentById(@PathVariable BigDecimal id){
+        studentServiceInterface.deleteStudentById(id);
+    }
 
 
 
