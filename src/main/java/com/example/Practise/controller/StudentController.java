@@ -67,6 +67,7 @@ public class StudentController {
 
     @PutMapping("/students/{id}")
     public void updateStudent(@RequestBody Student student, @PathVariable BigDecimal id){
+
         studentServiceInterface.updateStudent(id, student);
     }
 

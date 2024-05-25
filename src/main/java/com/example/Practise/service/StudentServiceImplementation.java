@@ -7,6 +7,7 @@ import com.example.Practise.model.Student;
 import com.example.Practise.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -21,16 +22,18 @@ public class StudentServiceImplementation implements StudentServiceInterface{
     private static final Logger log = LoggerFactory.getLogger(StudentServiceImplementation.class);
 
 
-    private final StudentRepository studentRepository;
+    @Autowired
+    private  StudentRepository studentRepository;
 
 
-    private final StudentMapper studentMapper;
+    @Autowired
+    private StudentMapper studentMapper;
 
-    //constructor injection since lombok injection may lead to creating may beans
-    public StudentServiceImplementation(StudentRepository studentRepository, StudentMapper studentMapper) {
-        this.studentRepository = studentRepository;
-        this.studentMapper = studentMapper;
-    }
+//    //constructor injection since lombok injection may lead to creating many beans
+//    public StudentServiceImplementation(StudentRepository studentRepository, StudentMapper studentMapper) {
+//        this.studentRepository = studentRepository;
+//        this.studentMapper = studentMapper;
+//    }
 
 
     //creating a new student
@@ -61,6 +64,7 @@ public class StudentServiceImplementation implements StudentServiceInterface{
 
     public void updateStudent(BigDecimal id, Student student) {
         studentRepository.save(student);
+
     }
 
     @Override
