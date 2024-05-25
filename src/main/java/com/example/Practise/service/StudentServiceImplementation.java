@@ -5,9 +5,7 @@ import com.example.Practise.dto.StudentDto;
 import com.example.Practise.mapper.StudentMapper;
 import com.example.Practise.model.Student;
 import com.example.Practise.repository.StudentRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
@@ -15,25 +13,20 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
-public class StudentServiceImplementation implements StudentServiceInterface{
+public class StudentServiceImplementation implements StudentService {
+
+    private final StudentRepository studentRepository;
 
 
-    private static final Logger log = LoggerFactory.getLogger(StudentServiceImplementation.class);
+    private final StudentMapper studentMapper;
 
-
-    @Autowired
-    private  StudentRepository studentRepository;
-
-
-    @Autowired
-    private StudentMapper studentMapper;
-
-//    //constructor injection since lombok injection may lead to creating many beans
-//    public StudentServiceImplementation(StudentRepository studentRepository, StudentMapper studentMapper) {
-//        this.studentRepository = studentRepository;
-//        this.studentMapper = studentMapper;
-//    }
+    //constructor injection since lombok injection may lead to creating may beans
+    public StudentServiceImplementation(StudentRepository studentRepository, StudentMapper studentMapper) {
+        this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
+    }
 
 
     //creating a new student
@@ -45,31 +38,43 @@ public class StudentServiceImplementation implements StudentServiceInterface{
 
     //getting a list of students
     public List<Student> getAllStudents() {
-         return studentRepository.findAll();
+        return studentRepository.findAll();
 
     }
 
     //get student by id
     public Optional<StudentDto> getStudentById(BigDecimal id){
         Optional<StudentDto> studentDto = studentRepository.findById(id).map(studentMapper::StudentToStudentDto);
-  if (studentDto.isPresent()){
-      return studentDto;
-  }else {
-      log.info("Failed to fetched student by Id");
-      return null;
-  }
+        if (studentDto.isPresent()){
+            return studentDto;
+        }else {
+            log.info("Failed to fetched student by Id");
+            return null;
+        }
     }
 
 
 
     public void updateStudent(BigDecimal id, Student student) {
-        studentRepository.save(student);
+        Optional<Student> studentFromDb = studentRepository.findById(id);
+        if (studentFromDb.isPresent()) {
+            student.setId(studentFromDb.get().getId());
+            studentRepository.save(student);
+        } else {
+            throw new RuntimeException("Student not found");
+        }
 
     }
 
     @Override
     public void deleteStudentById(BigDecimal id) {
-        studentRepository.deleteById(id);
+        Optional<Student> studentFromD = studentRepository.findById(id);
+        if (studentFromD.isPresent()){
+            studentRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("student not found");
+        }
+
 
     }
 

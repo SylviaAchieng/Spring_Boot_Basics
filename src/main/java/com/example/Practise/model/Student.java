@@ -21,15 +21,21 @@ public class Student {
     @Id //shows that the id is a primary key
     private BigDecimal id;
 
+    @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "last_name")
     private String lastName;
 
+    @Column(name="location")
     private String location;
 
+    @Column(name = "email")
     private String email;
 
+    @Column(name = "password")
     private String password;
 
+    @Column(name = "age")
     private BigDecimal age;
 }

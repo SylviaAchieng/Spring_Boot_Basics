@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface StudentServiceInterface {
+public interface StudentService {
 
 
     List<Student> getAllStudents();
@@ -21,4 +21,6 @@ public interface StudentServiceInterface {
     void updateStudent(BigDecimal id, Student student);
 
     void deleteStudentById(BigDecimal id);
+
+
 }

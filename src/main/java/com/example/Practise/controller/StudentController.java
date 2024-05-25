@@ -2,11 +2,9 @@ package com.example.Practise.controller;
 
 import com.example.Practise.dto.StudentDto;
 import com.example.Practise.model.Student;
-import com.example.Practise.repository.StudentRepository;
-import com.example.Practise.service.StudentServiceInterface;
+import com.example.Practise.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +15,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/greetings") //@RequestMapping maps to a Get method by default
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class StudentController {
-    @Autowired
-    private StudentServiceInterface studentServiceInterface;
 
+    private final StudentService studentService;
 
-
-//    private  final StudentRepository studentRepository;
 
     @GetMapping("/hello")
     public String greetings(){
@@ -40,7 +35,9 @@ public class StudentController {
     @PostMapping("/add")
     public ResponseEntity<Student> addStudent(@RequestBody Student student){
         try {
-            Student addedStudent=studentServiceInterface.addStudent(student);
+            log.info(student.toString());
+            Student addedStudent= studentService.addStudent(student);
+//            log.info(addedStudent.toString());
             return new ResponseEntity<>(addedStudent,HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
@@ -50,30 +47,29 @@ public class StudentController {
     //handler method to handle list of students and return mode and view
     @GetMapping("/students")
     public List<Student> getAllStudents(){
-        return studentServiceInterface.getAllStudents();
+        return studentService.getAllStudents();
     }
 
     @GetMapping("/students/{id}")
     public ResponseEntity<Optional<StudentDto>> getStudentById(@PathVariable BigDecimal id){
 
-    try {
-        Optional<StudentDto> student=studentServiceInterface.getStudentById(id);
-        return new ResponseEntity<>(student, HttpStatus.OK);
+        try {
+            Optional<StudentDto> student= studentService.getStudentById(id);
+            return new ResponseEntity<>(student, HttpStatus.OK);
 
-    }catch (Exception e){
-       return  new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+        }catch (Exception e){
+            return  new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/students/{id}")
     public void updateStudent(@RequestBody Student student, @PathVariable BigDecimal id){
-
-        studentServiceInterface.updateStudent(id, student);
+        studentService.updateStudent(id, student);
     }
 
     @DeleteMapping("/students/{id}")
     public void deleteStudentById(@PathVariable BigDecimal id){
-        studentServiceInterface.deleteStudentById(id);
+        studentService.deleteStudentById(id);
     }
 
 
