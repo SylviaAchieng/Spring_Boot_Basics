@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -77,5 +78,18 @@ public class StudentServiceImplementation implements StudentService {
 
 
     }
+
+//    @Override
+//    public Student addListOfStudents(List<Student> student) {
+//        List<Student> addedStudents = student.stream().collect(Collectors.toList());
+//        studentRepository.stream().collect(Collectors.toList()).saveAll(addedStudents);
+//
+//    }
+
+    // adding a list of students
+    public List<Student> addStudentList(List<Student> students){
+        return studentRepository.saveAll(students);
+    }
+
 
 }

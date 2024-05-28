@@ -8,8 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+//import io.swagger.annotations.ApiOperation;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,6 +74,25 @@ public class StudentController {
         studentService.deleteStudentById(id);
     }
 
+//    @PostMapping("/students/list")
+//    public ResponseEntity<List<Student>> addListOfStudents(@RequestBody List<Student> student){
+//        try{
+//           List<Student> addedStudents = (List<Student>) studentService.addListOfStudents((Student) student);
+//           return  new ResponseEntity<>(addedStudents, HttpStatus.CREATED);
+//        }catch (Exception e){
+//
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+//    @PostMapping("/add-students")
+//    public List<Student> saveStudents(List<Student> students) {
+//        return studentService.addStudentList(students);
+//    }
 
+
+    @PostMapping("add-students")
+    public List<Student> addStudentList(@RequestBody List<Student> students){
+        return studentService.addStudentList(students);
+    }
 
 }
