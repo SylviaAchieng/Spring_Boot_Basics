@@ -23,4 +23,7 @@ public interface StudentService {
     void deleteStudentById(BigDecimal id);
 
 
+
+
+    List<Student> addStudentList(List<Student> students);
 }
