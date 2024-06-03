@@ -48,7 +48,7 @@ public class StudentController {
 
     //handler method to handle list of students and return mode and view
     @GetMapping("/students")
-    public List<Student> getAllStudents(){
+    public List<StudentDto> getAllStudents(){
         return studentService.getAllStudents();
     }
 
@@ -94,5 +94,9 @@ public class StudentController {
     public List<Student> addStudentList(@RequestBody List<Student> students){
         return studentService.addStudentList(students);
     }
+
+    //partial update using patch method
+
+
 
 }

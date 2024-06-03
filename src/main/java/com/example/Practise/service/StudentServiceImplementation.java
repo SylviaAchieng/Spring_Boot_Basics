@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 @Service
 public class StudentServiceImplementation implements StudentService {
 
-    private final StudentRepository studentRepository;
+    private  StudentRepository studentRepository;
 
 
-    private final StudentMapper studentMapper;
+    private  StudentMapper studentMapper;
 
     //constructor injection since lombok injection may lead to creating may beans
     public StudentServiceImplementation(StudentRepository studentRepository, StudentMapper studentMapper) {
@@ -38,8 +38,8 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     //getting a list of students
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<StudentDto> getAllStudents() {
+        return studentRepository.findAll().stream().map(studentMapper::StudentToStudentDto).toList();
 
     }
 
@@ -87,9 +87,14 @@ public class StudentServiceImplementation implements StudentService {
 //    }
 
     // adding a list of students
-    public List<Student> addStudentList(List<Student> students){
-        return studentRepository.saveAll(students);
+    public List<Student> addStudentList(List<Student> students)
+    {
+        return students.stream().map(studentRepository::save).toList();
+        //return studentRepository.saveAll(students);
+
     }
+
+
 
 
 }

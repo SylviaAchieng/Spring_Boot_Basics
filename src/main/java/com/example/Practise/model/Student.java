@@ -30,12 +30,21 @@ public class Student {
     @Column(name="location")
     private String location;
 
-    @Column(name = "email")
+    @Column(unique = true)
     private String email;
 
     @Column(name = "password")
     private String password;
 
-    @Column(name = "age")
+//    @Column(name = "date_of_birth")
+//    private String dateOfBirth;
+
+    //@Transient automatically calculates the age if the date of birth is provided
+//    @Transient
     private BigDecimal age;
+
+
+    //    public BigDecimal getAge(){
+//        return BigDecimal.valueOf(Period.between(LocalDate.parse(dateOfBirth), LocalDate.now()).getYears());
+//    }
 }

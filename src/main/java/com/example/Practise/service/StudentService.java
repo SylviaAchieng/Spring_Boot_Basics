@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface StudentService {
 
 
-    List<Student> getAllStudents();
+    List<StudentDto> getAllStudents();
 
 
     Optional<StudentDto> getStudentById(BigDecimal id);
@@ -26,4 +26,6 @@ public interface StudentService {
 
 
     List<Student> addStudentList(List<Student> students);
+
+
 }
