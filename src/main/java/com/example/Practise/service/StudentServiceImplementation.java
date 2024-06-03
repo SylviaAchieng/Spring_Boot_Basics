@@ -38,8 +38,8 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     //getting a list of students
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<StudentDto> getAllStudents() {
+        return studentRepository.findAll().stream().map(studentMapper::StudentToStudentDto).toList();
 
     }
 
@@ -93,6 +93,8 @@ public class StudentServiceImplementation implements StudentService {
         //return studentRepository.saveAll(students);
 
     }
+
+
 
 
 }
