@@ -1,2 +1,4 @@
-package com.example.Practise.config;public class SecurityConfiguration {
+package com.example.Practise.config;
+
+public class SecurityConfiguration {
 }
