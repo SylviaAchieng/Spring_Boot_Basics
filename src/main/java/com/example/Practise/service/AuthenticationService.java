@@ -8,21 +8,26 @@ import com.example.Practise.auth.AuthenticationRequest;
 import com.example.Practise.auth.RegisterRequest;
 import com.example.Practise.auth.AuthenticationResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final StudentRepository studentRepository;
+    @Autowired
+    private StudentRepository studentRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    private final JwtService jwtService;
+    @Autowired
+    private JwtService jwtService;
 
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest registerRequest) {
@@ -49,9 +54,9 @@ public class AuthenticationService {
                         authenticationRequest.getPassword()
                 )
         );
-        var user = studentRepository.findByEmail(authenticationRequest.getEmail())
-                .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        var user = studentRepository.findByEmail(authenticationRequest.getEmail());
+
+        var jwtToken = jwtService.generateToken(user.get());
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)

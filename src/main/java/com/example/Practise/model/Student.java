@@ -41,6 +41,10 @@ public class Student implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @ManyToOne
+    @JoinColumn(name = "courseId")
+    private Courses courses;
+
 //    @Column(name = "date_of_birth")
 //    private String dateOfBirth;
 
