@@ -1,4 +1,4 @@
-package com.example.Practise.request;
+package com.example.Practise.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
