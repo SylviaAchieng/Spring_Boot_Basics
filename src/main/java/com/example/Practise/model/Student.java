@@ -27,13 +27,10 @@ public class Student implements UserDetails {
     private BigDecimal id;
 
     @Column(name = "first_name")
-    private String firstName;
+    private String firstname;
 
     @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name="location")
-    private String location;
+    private String lastname;
 
     @Column(unique = true)
     private String email;

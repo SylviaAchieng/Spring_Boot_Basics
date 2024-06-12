@@ -8,6 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.websocket.Decoder;
 import org.antlr.v4.runtime.Token;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.security.Signature;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+@Service
 public class JwtService {
 
     private static final String SECRET_KEY = "JQP+1TxjZnRR8M6+FFsELjGkIYWerYoImmTAsYfiqxJj3U0c6P/FQ5EfCMwVPKif";
